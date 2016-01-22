@@ -1,14 +1,27 @@
+// Tileset
+var tileSet = document.createElement("img");
+tileSet.src = "dungeontiles-blue.png";
+
 // Setup Display
 var width = 40,
     height = 25;
 
-var display = new ROT.Display({
+var displayOptions = {
+  layout: "tile",
+  bg: "transparent",
+  tileWidth: 24,
+  tileHeight: 24,
+  tileSet: tileSet,
+  tileMap: {
+    '@': [168, 264],
+    '#': [0, 24],
+    ' ': [24, 0]
+  },
   width: width,
-  height: height,
-  fontSize: 18,
-  forceSquareRatio: true
-});
+  height: height
+}
 
+var display = new ROT.Display(displayOptions);
 document.body.appendChild(
   display.getContainer()
 );
@@ -16,7 +29,6 @@ document.body.appendChild(
 // Generate map
 ROT.RNG.setSeed(ROT.RNG.getUniformInt(0, 11235813));
 var rngState = ROT.RNG.getState();
-
 
 var map = [];
 var mapGenerator = new ROT.Map.Cellular(width, height);
@@ -57,9 +69,8 @@ function drawMap () {
     }
   }
 
-  display.draw(playerCoords[0], playerCoords[1], '@', "#0FF");
+  display.draw(playerCoords[0], playerCoords[1], [map[playerCoords[1]][playerCoords[0]], '@']);
 }
-drawMap();
 
 // Event Handling
 function nextCoords(dir) {
@@ -74,7 +85,6 @@ function nextCoords(dir) {
 
 document.addEventListener("keydown", function (event) {
   var dir;
-
   switch (event.keyCode) {
   case ROT.VK_E:
     dir = ROT.DIRS[4][0];
@@ -100,3 +110,5 @@ document.addEventListener("keydown", function (event) {
   playerCoords = nextCoords(dir);
   drawMap();
 });
+
+tileSet.onload = drawMap;
