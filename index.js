@@ -27,7 +27,11 @@ document.body.appendChild(
 );
 
 // Generate map
-ROT.RNG.setSeed(ROT.RNG.getUniformInt(0, 11235813));
+var seed = ROT.RNG.getUniformInt(0, 11235813);
+var div = document.body.appendChild(document.createElement("div"));
+div.appendChild(document.createTextNode("SEED: " + seed));
+
+ROT.RNG.setSeed(seed);
 var rngState = ROT.RNG.getState();
 
 var map = [];
