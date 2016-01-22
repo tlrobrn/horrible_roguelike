@@ -18,6 +18,8 @@ document.body.appendChild(
 
 sceneManager.addScene("title", TitleScene);
 sceneManager.addScene("map", MapScene);
+sceneManager.addScene("lose", LoseScene);
+sceneManager.addScene("win", WinScene);
 
 tileSet.onload = function () {
   sceneManager.loadScene("title");
